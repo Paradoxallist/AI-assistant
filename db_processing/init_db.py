@@ -1,5 +1,6 @@
 import sqlite3
 from utils.path import DB_ABS_PATH
+from db_utils import  drop_table
 
 
 def init_db():
@@ -16,6 +17,7 @@ def init_db():
         archive_path TEXT    NOT NULL,
         member_path  TEXT    NOT NULL,
         file_name    TEXT    NOT NULL,
+        extension    TEXT    NOT NULL,
         file_size    INTEGER NOT NULL,
         processed    BOOLEAN NOT NULL DEFAULT 0,
         detected_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -28,5 +30,6 @@ def init_db():
 
 
 if __name__ == "__main__":
+    drop_table()
     init_db()
     print(f"Initialized database at {DB_ABS_PATH}")
