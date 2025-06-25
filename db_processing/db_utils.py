@@ -26,6 +26,25 @@ def add_file(archive_path: str, member_path: str, file_name: str, extension: str
     conn.close()
 
 # --------------------- SELECT ---------------------
+def get_file_by_id(file_id: int) -> tuple:
+    """
+    Return the file record for a given ID.
+    Row: (id, archive_path, member_path, file_name, extension, file_size, processed, detected_at)
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        SELECT id, archive_path, member_path, file_name, extension, file_size, processed, detected_at
+          FROM files
+         WHERE id = ?
+        """,
+        (file_id,)
+    )
+    row = cur.fetchone()
+    conn.close()
+    return row
+
 def get_unprocessed_files() -> list:
     """
     Return all files that have not yet been processed.
