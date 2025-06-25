@@ -92,7 +92,7 @@ def count_unprocessed() -> int:
     return count
 
 # --------------------- UPDATE ---------------------
-def mark_file_processed(file_id: int) -> None:
+def mark_file_processed_by_id(file_id: int) -> None:
     """
     Mark the given file record as processed.
     """
@@ -109,8 +109,24 @@ def mark_file_processed(file_id: int) -> None:
     conn.commit()
     conn.close()
 
+def unmark_file_processed_by_id(file_id: int) -> None:
+    """
+    Mark the given file record as unprocessed.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        UPDATE files
+           SET processed = 0
+         WHERE id = ?
+        """,
+        (file_id,)
+    )
+    conn.commit()
+    conn.close()
 
-def update_file(file_id: int, **kwargs) -> None:
+def update_file_by_id(file_id: int, **kwargs) -> None:
     """
     Update arbitrary fields on a file record.
     Allowed keys: archive_path, member_path, file_name, file_size, processed.
@@ -133,8 +149,23 @@ def update_file(file_id: int, **kwargs) -> None:
     conn.commit()
     conn.close()
 
+def unmark_all_files() -> None:
+    """
+    Mark all file records as unprocessed.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        UPDATE files
+           SET processed = 0
+        """
+    )
+    conn.commit()
+    conn.close()
+
 # --------------------- DELETE ---------------------
-def delete_file(file_id: int) -> None:
+def delete_file_by_id(file_id: int) -> None:
     """
     Delete a file record by its ID.
     """
