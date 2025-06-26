@@ -1,4 +1,3 @@
-# db_processing/db_utils.py
 import sqlite3
 from utils.path import DB_ABS_PATH
 
