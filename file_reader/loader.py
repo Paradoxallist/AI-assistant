@@ -1,4 +1,3 @@
-# db_processing/loader.py
 import os
 import zipfile
 import tarfile
@@ -6,7 +5,7 @@ from tqdm import tqdm
 
 from utils.path import TEXTS_ABS_PATH
 from config.settings import  ARCHIVE_EXTENSION
-from db_processing.db_utils import add_file
+from db.repositories.files_repo import add_file
 
 
 
